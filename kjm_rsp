@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang = "ko">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		body>div {
+			width: 400px;
+			height: 590px;
+			background-color: black;
+			border: 10px ridge yellow;
+			display: inline-block;
+			position: relative;
+			border-radius: 30px;
+			margin: 0 auto;
+		}
+		#opponent {
+			width: 150px;
+			height: 150px;
+			text-align: center;
+			display: block;
+			border: 5px dotted red;
+			border-radius: 75px;
+			margin: 20px auto;
+		}
+		#ment {
+			height: 60px;
+			display: block;
+			text-align: center;
+			color: white;
+			font-size: 50px;
+		}
+		.btn {
+			width: 80px;
+			height: 80px;
+			text-align: center;
+			display: inline-block;
+			margin: 20px 15px;
+		}
+		#score {
+			height: 50px;
+			display: block;
+			color: white;
+			margin: 0 auto;
+			font-size: 20px;
+			text-align: center;
+		}
+		.imgS {		/*가위 사진*/
+			background: url("https://i.011st.com/cm_exhibition/2012/1501/mwevent/game/images/user_img_0.png");
+			background-size: cover;
+		}
+		.imgR {		/*바위 사진*/
+			background: url("https://i.011st.com/cm_exhibition/2012/1501/mwevent/game/images/user_img_1.png");
+			background-size: cover;
+		}
+		.imgP {		/*보 사진*/
+			background: url("https://i.011st.com/cm_exhibition/2012/1501/mwevent/game/images/user_img_2.png");
+			background-size: cover;
+		}
+		#btnRe {
+			display: block;
+			text-align: center;
+			margin: 0 auto;
+			background-color: black;
+			font-size: 20px;
+			color: white;
+			border: 1px solid white;
+		}
+	</style>
+	<script>	
+		var cnt = 0;	//게임 횟수
+		var win = 0;	//이겼을 때
+		var draw = 0;	//비겼을 때
+		var lose = 0;	//졌을 때
+		
+		function rsp(input) {	//가위 선택시 호출
+			if(cnt<3) {
+				var ment = document.getElementById('ment');
+				cnt++;
+				var result = calc(input);
+				if (result == 'win') {
+					win++;
+					ment.innerHTML = "YOU WIN!";
+				}
+				else if (result == 'draw') {
+					draw++;
+					ment.innerHTML = "DRAW";				
+				}
+				else {
+					lose++;
+					ment.innerHTML = "YOU LOSE";
+				}
+				
+				document.getElementById('score').innerHTML = "[" + cnt + " match] " + win + " win/ " + lose + " lose/ " + draw + " draw";
+			}
+		}
+
+		
+		function calc(input) {
+			var rand = Math.floor(Math.random()*(2-0+1));	//가위 = 0, 바위 = 1, 보 = 2;
+			//Math.floor(Math.random()*(max-min+1))+min;
+			//Math.floor(Math.random()*(100-0+1))+0;
+			//Math.floor() : 내림값
+			console.log("opponent's value >> " + rand);
+
+			var img = document.getElementById("opponent");
+			
+			if(rand == 0) {			
+				img.style.backgroundImage = "url('https://i.011st.com/cm_exhibition/2012/1501/mwevent/game/images/user_img_0.png')"
+				img.style.backgroundSize = "cover";
+			}
+			else if(rand == 1) {	
+				img.style.backgroundImage = "url('https://i.011st.com/cm_exhibition/2012/1501/mwevent/game/images/user_img_1.png')"
+				img.style.backgroundSize = "cover";
+			}
+			else {					
+				img.style.backgroundImage = "url('https://i.011st.com/cm_exhibition/2012/1501/mwevent/game/images/user_img_2.png')"
+				img.style.backgroundSize = "cover";
+			}
+			
+			var result = input - rand;
+			if(result == 0) {	
+				return 'draw';
+			}
+			else if(result == 1 || result == -2) {	
+				return 'win';
+			}
+			else {	
+				return 'lose';
+			}
+		}
+		
+		function re() {
+			cnt = 0;	
+			win = 0;	
+			draw = 0;	
+			lose = 0;	
+			document.getElementById("opponent").style.backgroundImage = '';
+			document.getElementById('ment').innerHTML = '';
+			document.getElementById('score').innerHTML = "[" + cnt + " match] " + win + " win/ " + lose + " lose/ " + draw + " draw";		
+		}
+	</script>
+</head>
+<body>
+	<div>
+		<h1 style="text-align: center; color: white;">Rock Scissors Paper </h1>
+		<div id="opponent"></div>
+		<div id="ment"></div>
+		<div style="display:block; text-align:center;">
+			<input class="btn imgS" type="button" onclick="rsp(0);">	
+			<input class="btn imgR" type="button" onclick="rsp(1);">	
+			<input class="btn imgP" type="button" onclick="rsp(2);">	
+		</div>
+		<div id="score"></div>
+		<input id="btnRe" type="button" onclick="re();" value="one more">	
+	</div>
+</body>
+</html>
+
+<!--
+
+
+
+
+-->
